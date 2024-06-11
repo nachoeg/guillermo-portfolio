@@ -35,7 +35,7 @@ export function CarouselProject({ images }: { images: string[] }) {
         <button
           key={i}
           onClick={() => api?.scrollTo(i)}
-          className={`size-1.5 rounded-full mx-0.5 shadow shadow-neutral-700 ${
+          className={`size-1.5 rounded-full mx-0.5 shadow shadow-neutral-500 ${
             current === i + 1 ? "bg-neutral-50" : "bg-neutral-50/30"
           }`}
         />
@@ -60,7 +60,7 @@ export function CarouselProject({ images }: { images: string[] }) {
                 />
                 <img
                   src={image}
-                  className=" hover:scale-105   transition duration-200 object-contain z-10 border-0"
+                  className=" hover-hover:hover:scale-105   transition duration-200 object-contain z-10 border-0"
                   alt={`Project ${index + 1}`}
                 />
               </CardContent>
