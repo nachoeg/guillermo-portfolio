@@ -17,10 +17,10 @@ export function CarouselProject({ images }: { images: string[] }) {
           <CarouselItem key={index}>
             <div className="">
               <Card>
-                <CardContent className="flex aspect-square items-center justify-center p-0 rounded cursor-grab   select-none">
+                <CardContent className="flex aspect-square items-center justify-center p-0 rounded-b cursor-grab   select-none overflow-clip">
                   <img
                     src={image}
-                    className="rounded hover:scale-105  transition duration-200 "
+                    className="rounded-b hover:scale-105  transition duration-200 "
                     alt={`Project ${index + 1}`}
                   />
                 </CardContent>

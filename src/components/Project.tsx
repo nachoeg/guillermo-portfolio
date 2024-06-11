@@ -26,7 +26,7 @@ export function Project({ data }: { data: ProjectData }) {
           alt={"Project: " + data.title}
         />
       </DialogTrigger>
-      <DialogContent className="sm:max-w-xl gap-0">
+      <DialogContent className="sm:max-w-xl gap-0 overflow-clip">
         <DialogHeader className="p-3">
           <DialogTitle>{data.title}</DialogTitle>
           <DialogDescription>{data.description}</DialogDescription>
