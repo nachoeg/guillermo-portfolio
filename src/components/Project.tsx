@@ -22,7 +22,7 @@ export function Project({ data }: { data: ProjectData }) {
       <DialogTrigger asChild>
         <div
           className={
-            "flex aspect-square p-0 justify-center hover:brightness-75 select-none overflow-clip  relative"
+            "flex aspect-square p-0 justify-center hover:brightness-75 select-none overflow-clip rounded  relative"
           }
         >
           <img

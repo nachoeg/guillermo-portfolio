@@ -49,9 +49,9 @@ export function CarouselProject({ images }: { images: string[] }) {
       <CarouselContent>
         {images.map((image, index) => (
           <CarouselItem key={index}>
-            <Card>
+            <Card className="rounded-none">
               <CardContent
-                className={`flex aspect-square p-0 justify-center cursor-grab  active:cursor-grabbing  select-none overflow-clip  relative`}
+                className={`flex aspect-square p-0 justify-center cursor-grab  active:cursor-grabbing  select-none overflow-clip  relative rounded-none`}
               >
                 <img
                   src={image}
