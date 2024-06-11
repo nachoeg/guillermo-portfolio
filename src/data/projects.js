@@ -36,7 +36,7 @@ const PROJECTS = [
     title: "Project 5",
     description: "This is project 5",
     images: [
-      "https://placehold.co/1000",
+      "https://placehold.co/1200x1000",
       "https://placehold.co/1000",
       "https://placehold.co/1000",
     ],
@@ -46,7 +46,7 @@ const PROJECTS = [
     title: "Project 6",
     description: "This is project 6",
     images: [
-      "https://placehold.co/1000",
+      "https://placehold.co/1000x1200",
       "https://placehold.co/1000",
       "https://placehold.co/1000",
     ],
@@ -56,7 +56,7 @@ const PROJECTS = [
     title: "Project 7",
     description: "This is project 7",
     images: [
-      "https://placehold.co/1000",
+      "/gallery/07.jpg",
       "https://placehold.co/1000",
       "https://placehold.co/1000",
     ],

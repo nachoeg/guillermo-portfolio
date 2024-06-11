@@ -20,11 +20,22 @@ export function Project({ data }: { data: ProjectData }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <img
-          className="cursor-pointer hover:brightness-75"
-          src={data.images[0]}
-          alt={"Project: " + data.title}
-        />
+        <div
+          className={
+            "flex aspect-square p-0 justify-center hover:brightness-75 select-none overflow-clip  relative"
+          }
+        >
+          <img
+            src={data.images[0]}
+            className=" absolute aspect-auto object-cover w-full h-full blur-3xl brightness-150 "
+            alt={"Project: " + data.title}
+          />
+          <img
+            src={data.images[0]}
+            className=" cursor-pointer transition duration-200 object-contain z-10"
+            alt={"Project: " + data.title}
+          />
+        </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-xl gap-0 overflow-clip">
         <DialogHeader className="p-3">

@@ -15,17 +15,22 @@ export function CarouselProject({ images }: { images: string[] }) {
       <CarouselContent>
         {images.map((image, index) => (
           <CarouselItem key={index}>
-            <div className="">
-              <Card>
-                <CardContent className="flex aspect-square items-center justify-center p-0 rounded-b cursor-grab  active:cursor-grabbing  select-none overflow-clip">
-                  <img
-                    src={image}
-                    className="rounded-b hover:scale-105  transition duration-200 "
-                    alt={`Project ${index + 1}`}
-                  />
-                </CardContent>
-              </Card>
-            </div>
+            <Card>
+              <CardContent
+                className={`flex aspect-square p-0 justify-center cursor-grab  active:cursor-grabbing  select-none overflow-clip  relative`}
+              >
+                <img
+                  src={image}
+                  className=" absolute aspect-auto object-cover w-full h-full blur-3xl brightness-150 "
+                  alt={`Project ${index + 1}`}
+                />
+                <img
+                  src={image}
+                  className=" hover:scale-105   transition duration-200 object-contain z-10"
+                  alt={`Project ${index + 1}`}
+                />
+              </CardContent>
+            </Card>
           </CarouselItem>
         ))}
       </CarouselContent>
