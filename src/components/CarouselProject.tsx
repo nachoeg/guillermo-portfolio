@@ -17,7 +17,7 @@ export function CarouselProject({ images }: { images: string[] }) {
           <CarouselItem key={index}>
             <div className="">
               <Card>
-                <CardContent className="flex aspect-square items-center justify-center p-0 rounded-b cursor-grab   select-none overflow-clip">
+                <CardContent className="flex aspect-square items-center justify-center p-0 rounded-b cursor-grab  active:cursor-grabbing  select-none overflow-clip">
                   <img
                     src={image}
                     className="rounded-b hover:scale-105  transition duration-200 "
