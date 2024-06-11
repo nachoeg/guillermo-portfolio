@@ -1,0 +1,86 @@
+---
+import { TagSelector } from "@/components/TagSelector";
+import HamburgerMenu from "@/components/HamburgerMenu";
+import { Button } from "./ui/button";
+import Instagram from "@/icons/Instagram.astro";
+import WhatsApp from "@/icons/WhatsApp.astro";
+import { ModeToggle } from "@/components/ModeToggle";
+import Mail from "@/icons/Mail.astro";
+import { SheetTitle } from "@/components/ui/sheet";
+---
+
+<header
+  class="flex flex-col gap-2 py-4 fixed bg-background px-2 sm:px-10 max-w-screen-xl w-full place-self-center inset-x-0 z-50"
+>
+  <nav class="flex justify-between">
+    <h1 class="text-2xl sm:text-3xl font-bold leading-10">
+      Guillermo Escudero
+    </h1>
+    <HamburgerMenu client:load>
+      <li>
+        <a href="https://www.instagram.com/escudero_guillermo/" target="_blank">
+          <Button variant="outline" className="w-full">
+            <span class="ml-1">Instagram</span>
+          </Button>
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://wa.me/2215228316?text=¡Hola!%20Estoy%20interesado%20en%20un%20trabajo."
+          target="_blank"
+        >
+          <Button variant="outline" className="w-full">
+            <span class="ml-1"> WhatsApp </span>
+          </Button>
+        </a>
+      </li>
+      <li>
+        <a href="mailto:guiescudero@hotmail.com" target="_blank">
+          <Button variant="outline" className="w-full">
+            <span class="ml-1"> Email </span>
+          </Button>
+        </a>
+      </li>
+      <li>
+        <h2 class="font-bold text-center text-lg mb-3">Preferencias</h2>
+        <ModeToggle client:load />
+      </li>
+    </HamburgerMenu>
+
+    <ul class="hidden sm:flex gap-1 items-start">
+      <li>
+        <a href="https://www.instagram.com/escudero_guillermo/" target="_blank">
+          <span class="sr-only">Instagram</span>
+          <Button variant="ghost" size="icon">
+            <Instagram class="size-7" />
+          </Button>
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://wa.me/2215228316?text=¡Hola!%20Estoy%20interesado%20en%20un%20trabajo."
+          target="_blank"
+        >
+          <span class="sr-only"> WhatsApp </span>
+          <Button variant="ghost" size="icon">
+            <WhatsApp class="size-6" />
+          </Button>
+        </a>
+      </li>
+      <li>
+        <a href="mailto:guiescudero@hotmail.com" target="_blank">
+          <span class="sr-only"> Email </span>
+          <Button variant="ghost" size="icon">
+            <Mail class="size-6" />
+          </Button>
+        </a>
+      </li>
+      <li>
+        <ModeToggle client:load />
+      </li>
+    </ul>
+    <!-- <MenuOptions /> -->
+  </nav>
+  <TagSelector client:load />
+</header>
+<style></style>
