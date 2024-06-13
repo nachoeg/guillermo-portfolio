@@ -39,7 +39,7 @@ export function ModeToggle() {
 
   return (
     <div className="flex items-center justify-between ">
-      <span className="sm:hidden ">Toggle theme</span>
+      <span className="sm:hidden ">Cambiar tema</span>
 
       <Button
         className="ring-0 hidden sm:flex"
@@ -55,7 +55,7 @@ export function ModeToggle() {
           className="absolute size-6 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
           strokeWidth={1.5}
         />
-        <span className="sr-only">Toggle theme</span>
+        <span className="sr-only">Cambiar tema</span>
       </Button>
       <Button
         className="ring-0 sm:hidden"
@@ -71,7 +71,7 @@ export function ModeToggle() {
           className="absolute size-6 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
           strokeWidth={1.5}
         />
-        <span className="sr-only">Toggle theme</span>
+        <span className="sr-only">Cambiar tema</span>
       </Button>
     </div>
     // <DropdownMenu>
