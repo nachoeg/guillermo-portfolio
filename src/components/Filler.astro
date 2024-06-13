@@ -1,0 +1,10 @@
+<div id="filler"></div>
+<script is:inline>
+  //fill the empty space left by the fixed header
+  const header = document.querySelector("header");
+  const headerHeight = header ? header.offsetHeight : 0;
+  const filler = document.querySelector("#filler");
+  if (filler) {
+    filler.style.paddingTop = `${headerHeight}px`;
+  }
+</script>

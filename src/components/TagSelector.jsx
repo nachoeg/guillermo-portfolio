@@ -12,12 +12,12 @@ export function TagSelector() {
   const selectedTag = useStore(tagStore);
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-2 sm:place-content-end">
       {TAGS.map((tag) => (
         <Badge
           key={tag}
           onClick={handleClick}
-          className="cursor-pointer select-none"
+          className="cursor-pointer select-none h-fit"
           variant={selectedTag == tag ? "default" : "secondary"}
         >
           {tag}

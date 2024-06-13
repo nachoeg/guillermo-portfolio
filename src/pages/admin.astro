@@ -1,4 +1,6 @@
 ---
+import AdminTools from "@/components/AdminTools.astro";
+import Filler from "@/components/Filler.astro";
 import Footer from "@/components/Footer.astro";
 import Gallery from "@/components/Gallery.astro";
 import Header from "@/components/Header.astro";
@@ -6,7 +8,10 @@ import Layout from "@/layouts/Layout.astro";
 ---
 
 <Layout title="Admin">
-  <Header />
+  <Header>
+    <AdminTools />
+  </Header>
+  <Filler />
   <Gallery />
   <Footer />
 </Layout>

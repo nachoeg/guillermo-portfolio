@@ -2,15 +2,6 @@
 import { ProjectsGrid } from "@/components/ProjectsGrid";
 ---
 
-<main class="flex flex-col gap-4 w-full [&_img]:size-full [&_img]:rounded">
+<main class="flex flex-col gap-4 w-full mx-auto px-2 sm:px-10 max-w-screen-xl">
   <ProjectsGrid client:load />
 </main>
-<script>
-  //fill the empty space left by the fixed header
-  const header = document.querySelector("header");
-  const headerHeight = header ? header.offsetHeight : 0;
-  const main = document.querySelector("main");
-  if (main) {
-    main.style.paddingTop = `${headerHeight}px`;
-  }
-</script>
