@@ -1,7 +1,26 @@
 ---
+import { Button } from "./ui/button";
+import { Separator } from "./ui/separator";
 const year = new Date().getFullYear();
 ---
 
-<footer class="p-20 text-center">
-  © {year} Desarollado con Astro y React
+<footer class="max-w-xl mx-auto text-center pt-20 pb-12">
+  <div class="flex h-5 items-center place-content-center space-x-2 text-sm">
+    <div class="px-4">
+      © {year} Guillermo Escudero
+    </div>
+    <Separator orientation="vertical" />
+    <a href="https://www.instagram.com/escudero_guillermo/" target="_blank">
+      <Button variant="link"> Instagram </Button>
+    </a>
+    <Separator orientation="vertical" />
+    <a
+      href="https://wa.me/2215228316?text=¡Hola!%20Estoy%20interesado%20en%20un%20trabajo."
+      target="_blank"><Button variant="link"> WhatsApp </Button></a
+    >
+    <Separator orientation="vertical" />
+    <a href="mailto:guiescudero@hotmail.com" target="_blank"
+      ><Button variant="link"> Email </Button></a
+    >
+  </div>
 </footer>
