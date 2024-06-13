@@ -9,6 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useRef } from "react";
 
 interface ProjectData {
   title: string;
@@ -17,6 +18,11 @@ interface ProjectData {
 }
 
 export function Project({ data }: { data: ProjectData }) {
+  const ref = useRef<{ handleKeyPress: (event: any) => void }>(null);
+
+  const handleKeyPress = (event: any) => {
+    ref.current?.handleKeyPress(event);
+  };
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -37,12 +43,15 @@ export function Project({ data }: { data: ProjectData }) {
           />
         </div>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-xl gap-0 overflow-clip border-0 dark:border ">
+      <DialogContent
+        onKeyDown={handleKeyPress}
+        className="sm:max-w-xl gap-0 overflow-clip border-0 dark:border "
+      >
         <DialogHeader className="p-3">
           <DialogTitle>{data.title}</DialogTitle>
           <DialogDescription>{data.description}</DialogDescription>
         </DialogHeader>
-        <CarouselProject images={data.images} />
+        <CarouselProject ref={ref} images={data.images} />
         {/* <div className="flex items-center space-x-2">
           <div className="grid flex-1 gap-2">
             <Label htmlFor="link" className="sr-only">

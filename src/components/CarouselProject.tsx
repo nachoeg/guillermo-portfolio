@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -9,70 +7,88 @@ import {
   CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
+import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 
-export function CarouselProject({ images }: { images: string[] }) {
-  const [api, setApi] = React.useState<CarouselApi>();
-  const [current, setCurrent] = React.useState(0);
-  const [count, setCount] = React.useState(0);
+export const CarouselProject = forwardRef<
+  { handleKeyPress: (event: any) => void },
+  { images: string[] }
+>(({ images }, ref) => {
+  {
+    const [api, setApi] = useState<CarouselApi>();
+    const [current, setCurrent] = useState(0);
+    const [count, setCount] = useState(0);
 
-  React.useEffect(() => {
-    if (!api) {
-      return;
-    }
+    useEffect(() => {
+      if (!api) {
+        return;
+      }
 
-    setCount(api.scrollSnapList().length);
-    setCurrent(api.selectedScrollSnap() + 1);
-
-    api.on("select", () => {
+      setCount(api.scrollSnapList().length);
       setCurrent(api.selectedScrollSnap() + 1);
-    });
-  }, [api]);
 
-  const renderButtons = () => {
-    const buttons = [];
-    for (let i = 0; i < count; i++) {
-      buttons.push(
-        <button
-          key={i}
-          onClick={() => api?.scrollTo(i)}
-          className={`size-1.5 rounded-full mx-0.5 shadow shadow-neutral-500 ${
-            current === i + 1 ? "bg-neutral-50" : "bg-neutral-50/30"
-          }`}
-        />
-      );
-    }
-    return buttons;
-  };
+      api.on("select", () => {
+        setCurrent(api.selectedScrollSnap() + 1);
+      });
+    }, [api]);
 
-  return (
-    <Carousel setApi={setApi} className="w-full max-w-xl relative">
-      <CarouselContent>
-        {images.map((image, index) => (
-          <CarouselItem key={index}>
-            <Card className="rounded-none border-0">
-              <CardContent
-                className={`flex aspect-square p-0 justify-center cursor-grab  active:cursor-grabbing  select-none overflow-clip  relative rounded-none bg-neutral-600 `}
-              >
-                <img
-                  src={image}
-                  className=" absolute aspect-auto object-cover w-full h-full blur-3xl saturate-200 brightness-125 border-0"
-                  alt={`Project ${index + 1}`}
-                />
-                <img
-                  src={image}
-                  className=" hover-hover:hover:scale-105   transition duration-200 object-contain z-10 border-0"
-                  alt={`Project ${index + 1}`}
-                />
-              </CardContent>
-            </Card>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
-      <div className="absolute bottom-3 place-self-center inset-x-0">
-        {renderButtons()}
-      </div>
-    </Carousel>
-  );
-}
+    const renderDots = () => {
+      const dots = [];
+      for (let i = 0; i < count; i++) {
+        dots.push(
+          <button
+            key={i}
+            onClick={() => api?.scrollTo(i)}
+            className={`size-1.5 rounded-full mx-0.5 shadow shadow-neutral-500 ${
+              current === i + 1 ? "bg-neutral-50" : "bg-neutral-50/30"
+            }`}
+          />
+        );
+      }
+      return dots;
+    };
+    const handleKeyPress = (event: any) => {
+      if (event.key === "ArrowLeft") {
+        api?.scrollPrev();
+      }
+      if (event.key === "ArrowRight") {
+        api?.scrollNext();
+      }
+    };
+
+    useImperativeHandle(ref, () => ({
+      handleKeyPress,
+    }));
+
+    return (
+      <Carousel setApi={setApi} className="w-full max-w-xl relative">
+        <CarouselContent>
+          {images.map((image, index) => (
+            <CarouselItem key={index}>
+              <Card className="rounded-none border-0">
+                <CardContent
+                  className={`flex aspect-square p-0 justify-center cursor-grab  active:cursor-grabbing  select-none overflow-clip  relative rounded-none bg-neutral-600 `}
+                >
+                  <img
+                    src={image}
+                    className=" absolute aspect-auto object-cover w-full h-full blur-3xl saturate-200 brightness-125 border-0"
+                    alt={`Project ${index + 1}`}
+                  />
+                  <img
+                    src={image}
+                    className=" hover-hover:hover:scale-105   transition duration-200 object-contain z-10 border-0"
+                    alt={`Project ${index + 1}`}
+                  />
+                </CardContent>
+              </Card>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+        <div className="absolute bottom-3 place-self-center inset-x-0">
+          {renderDots()}
+        </div>
+      </Carousel>
+    );
+  }
+});
