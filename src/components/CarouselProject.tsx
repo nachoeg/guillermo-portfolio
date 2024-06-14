@@ -38,8 +38,10 @@ export const CarouselProject = forwardRef<
           <button
             key={i}
             onClick={() => api?.scrollTo(i)}
-            className={`size-1.5 rounded-full mx-0.5 shadow shadow-neutral-500 ${
-              current === i + 1 ? "bg-neutral-50" : "bg-neutral-50/30"
+            className={`size-1.5 rounded-full mx-0.5 ${
+              current === i + 1
+                ? "bg-neutral-800 dark:bg-neutral-50"
+                : "bg-neutral-950/30 dark:bg-neutral-50/30"
             }`}
           />
         );
@@ -85,7 +87,7 @@ export const CarouselProject = forwardRef<
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />
-        <div className="absolute bottom-3 place-self-center inset-x-0">
+        <div className="absolute bottom-3 py-2 px-1 items-center flex place-self-center inset-x-0 bg-white/80 dark:bg-black/80 rounded-full">
           {renderDots()}
         </div>
       </Carousel>
