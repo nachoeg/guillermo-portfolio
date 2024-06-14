@@ -32,6 +32,9 @@ export const CarouselProject = forwardRef<
     }, [api]);
 
     const renderDots = () => {
+      if (count <= 1) {
+        return null;
+      }
       const dots = [];
       for (let i = 0; i < count; i++) {
         dots.push(
@@ -46,7 +49,11 @@ export const CarouselProject = forwardRef<
           />
         );
       }
-      return dots;
+      return (
+        <div className="absolute bottom-3 py-2 px-1 items-center flex place-self-center inset-x-0 bg-white/80 dark:bg-black/80 rounded-full">
+          {dots}
+        </div>
+      );
     };
     const handleKeyPress = (event: any) => {
       if (event.key === "ArrowLeft") {
@@ -87,9 +94,7 @@ export const CarouselProject = forwardRef<
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />
-        <div className="absolute bottom-3 py-2 px-1 items-center flex place-self-center inset-x-0 bg-white/80 dark:bg-black/80 rounded-full">
-          {renderDots()}
-        </div>
+        {renderDots()}
       </Carousel>
     );
   }
