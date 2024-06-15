@@ -9,6 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Squares } from "@/icons/Squares";
 import { useRef } from "react";
 
 interface ProjectData {
@@ -31,6 +32,11 @@ export function Project({ data }: { data: ProjectData }) {
             "flex aspect-square p-0 justify-center hover:brightness-75 select-none overflow-clip rounded-md relative bg-neutral-200 dark:bg-neutral-800"
           }
         >
+          {data.images.length > 1 && (
+            <div className="absolute top-3 right-3 z-20">
+              <Squares className="fill-white "></Squares>
+            </div>
+          )}
           <img
             src={data.images[0]}
             className=" absolute aspect-auto object-cover w-full h-full blur-3xl saturate-200    brightness-125 "
@@ -47,9 +53,9 @@ export function Project({ data }: { data: ProjectData }) {
         onKeyDown={handleKeyPress}
         className="sm:max-w-xl gap-0 overflow-clip border-0 dark:border "
       >
-        <DialogHeader className="p-3">
+        <DialogHeader className="p-4 ">
           <DialogTitle>{data.title}</DialogTitle>
-          <DialogDescription>{data.description}</DialogDescription>
+          {/* <DialogDescription>{data.description}</DialogDescription> */}
         </DialogHeader>
         <CarouselProject ref={ref} images={data.images} />
         {/* <div className="flex items-center space-x-2">
