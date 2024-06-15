@@ -82,16 +82,17 @@ export const CarouselProject = forwardRef<
     return (
       <Carousel
         setApi={setApi}
-        opts={{}}
+        opts={{ duration: 20 }}
+        className="bg-black"
         plugins={[
           WheelGesturesPlugin(),
           ClassNamesPlugin({ snapped: "isSnapped" }),
         ]}
       >
-        <CarouselContent className="duration-150">
+        <CarouselContent className="w-full ">
           {images.map((image, index) => (
             <CarouselItem
-              className="rounded-none border-0 p-0 justify-center cursor-grab  active:cursor-grabbing  select-none  relative flex basis-auto blur opacity-15 duration-200"
+              className="rounded-none border-0 p-0 justify-center cursor-grab  active:cursor-grabbing  select-none  relative flex  w-full sm:w-auto basis-auto duration-200 blur-xl opacity-20 bg-neutral-950"
               key={index}
             >
               {/* <img
@@ -101,7 +102,7 @@ export const CarouselProject = forwardRef<
               /> */}
               <img
                 src={image}
-                className="transition duration-200  max-h-screen sm:max-h-[calc(100vh-20px)] object-contain z-10 border-0"
+                className="max-w-screen max-h-screen  sm:max-h-[calc(100vh-20px)] object-contain z-10 border-0"
                 alt={`Project ${index + 1}`}
               />
             </CarouselItem>

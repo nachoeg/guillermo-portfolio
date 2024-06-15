@@ -51,7 +51,7 @@ export function Project({ data }: { data: ProjectData }) {
       </DialogTrigger>
       <DialogContent
         onKeyDown={handleKeyPress}
-        className="overflow-hidden  max-w-screen sm:max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-4xl 2xl:max-w-5xl gap-0 border-0 dark:border"
+        className="overflow-hidden rounded-xl max-w-[calc(100vw-10px)] sm:max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-4xl 2xl:max-w-5xl gap-0 border-0 dark:border"
       >
         {/* <DialogHeader className="p-4 ">
           <DialogTitle>{data.title}</DialogTitle>
