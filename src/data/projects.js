@@ -2,7 +2,14 @@ const PROJECTS = [
   {
     title: "Project 1",
     description: "This is project 1",
-    images: ["/gallery/01.jpg", "/gallery/02.jpg", "/gallery/03.jpg"],
+    images: [
+      "/gallery/01.jpg",
+      "/gallery/02.jpg",
+      "/gallery/03.jpg",
+      "/gallery/01.jpg",
+      "/gallery/02.jpg",
+      "/gallery/03.jpg",
+    ],
 
     tags: ["Sillas", "Mesas"],
   },
@@ -15,21 +22,13 @@ const PROJECTS = [
   {
     title: "Project 3",
     description: "This is project 3",
-    images: [
-      "https://placehold.co/1000",
-      "https://placehold.co/1000",
-      "https://placehold.co/1000",
-    ],
+    images: ["https://placehold.co/1000", "https://placehold.co/1000"],
     tags: ["Sillas", "Mesas", "Portones"],
   },
   {
     title: "Project 4",
     description: "This is project 4",
-    images: [
-      "https://placehold.co/1000",
-      "https://placehold.co/1000",
-      "https://placehold.co/1000",
-    ],
+    images: ["https://placehold.co/1000"],
     tags: ["Sillas", "Mesas"],
   },
   {
