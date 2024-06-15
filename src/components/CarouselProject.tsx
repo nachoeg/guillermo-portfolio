@@ -50,7 +50,7 @@ export const CarouselProject = forwardRef<
         );
       }
       return (
-        <div className="absolute bottom-3 py-2 px-1 items-center flex place-self-center inset-x-0 bg-white/80 dark:bg-black/80 rounded-full">
+        <div className="absolute bottom-3 py-2 px-1 items-center flex w-fit mx-auto inset-x-0 bg-white/80 dark:bg-black/80 rounded-full">
           {dots}
         </div>
       );
@@ -84,7 +84,7 @@ export const CarouselProject = forwardRef<
                   />
                   <img
                     src={image}
-                    className=" hover-hover:hover:scale-105   transition duration-200 object-contain z-10 border-0"
+                    className="transition duration-200 object-contain z-10 border-0"
                     alt={`Project ${index + 1}`}
                   />
                 </CardContent>
