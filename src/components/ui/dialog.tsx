@@ -32,7 +32,12 @@ const DialogContent = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
 >(({ className, children, ...props }, ref) => (
   <DialogPortal>
-    <DialogOverlay />
+    <DialogOverlay>
+      <div className="flex sm:hidden absolute right-1 top-1 text-white  p-1  ring-offset-background  opacity-100 focus:outline-none  focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+        <X className="size-8" strokeWidth="2" />
+        <span className="sr-only">Close</span>
+      </div>
+    </DialogOverlay>
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
@@ -42,7 +47,7 @@ const DialogContent = React.forwardRef<
       {...props}
     >
       {children}
-      <DialogPrimitive.Close className="absolute right-2 top-2 rounded-full border bg-white hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:bg-black p-1  ring-offset-background  opacity-100 focus:outline-none  focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+      <DialogPrimitive.Close className="hidden sm:flex absolute right-2 top-2 rounded-full border bg-white hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:bg-black p-1  ring-offset-background  opacity-100 focus:outline-none  focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
         <X className="size-5 " strokeWidth="2" />
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close>

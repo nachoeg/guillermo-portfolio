@@ -82,7 +82,10 @@ export const CarouselProject = forwardRef<
     return (
       <Carousel
         setApi={setApi}
-        opts={{ duration: 20 }}
+        opts={{
+          duration: 20,
+          // ,containScroll: false
+        }}
         className="bg-black"
         plugins={[
           WheelGesturesPlugin(),
@@ -92,7 +95,7 @@ export const CarouselProject = forwardRef<
         <CarouselContent className="w-full ">
           {images.map((image, index) => (
             <CarouselItem
-              className="rounded-none border-0 p-0 justify-center cursor-grab  active:cursor-grabbing  select-none  relative flex  w-full sm:w-auto basis-auto duration-200 blur-xl opacity-20 bg-neutral-950"
+              className="rounded-none border-0 p-0 justify-center cursor-grab  active:cursor-grabbing  select-none  relative flex  w-full sm:w-auto basis-auto duration-200 md:blur-xl opacity-20 bg-neutral-800"
               key={index}
             >
               {/* <img
