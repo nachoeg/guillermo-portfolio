@@ -75,7 +75,7 @@ export const CarouselProject = forwardRef<
             <CarouselItem key={index}>
               <Card className="rounded-none border-0">
                 <CardContent
-                  className={`flex aspect-square p-0 justify-center cursor-grab  active:cursor-grabbing  select-none overflow-clip  relative rounded-none bg-black dark:bg-white `}
+                  className={`flex aspect-square p-0 justify-center cursor-grab  active:cursor-grabbing  select-none overflow-clip  relative rounded-none bg-neutral-100 dark:bg-neutral-900 `}
                 >
                   {/* <img
                     src={image}
