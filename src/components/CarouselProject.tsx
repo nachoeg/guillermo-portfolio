@@ -75,13 +75,13 @@ export const CarouselProject = forwardRef<
             <CarouselItem key={index}>
               <Card className="rounded-none border-0">
                 <CardContent
-                  className={`flex aspect-square p-0 justify-center cursor-grab  active:cursor-grabbing  select-none overflow-clip  relative rounded-none bg-neutral-600 `}
+                  className={`flex aspect-square p-0 justify-center cursor-grab  active:cursor-grabbing  select-none overflow-clip  relative rounded-none bg-black dark:bg-white `}
                 >
-                  <img
+                  {/* <img
                     src={image}
                     className=" absolute aspect-auto object-cover w-full h-full blur-3xl saturate-200 brightness-125 border-0"
                     alt={`Project ${index + 1}`}
-                  />
+                  /> */}
                   <img
                     src={image}
                     className="transition duration-200 object-contain z-10 border-0"
