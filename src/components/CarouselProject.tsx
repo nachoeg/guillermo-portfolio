@@ -1,4 +1,5 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
+import ClassNamesPlugin from "embla-carousel-class-names";
 import {
   Carousel,
   CarouselContent,
@@ -7,7 +8,14 @@ import {
   CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
-import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useState,
+  type Key,
+} from "react";
+import { DotButton, useDotButton } from "./ui/EmblaCarouselDotButton";
 
 export const CarouselProject = forwardRef<
   { handleKeyPress: (event: any) => void },
@@ -55,6 +63,7 @@ export const CarouselProject = forwardRef<
         </div>
       );
     };
+
     const handleKeyPress = (event: any) => {
       if (event.key === "ArrowLeft") {
         api?.scrollPrev();
@@ -68,33 +77,51 @@ export const CarouselProject = forwardRef<
       handleKeyPress,
     }));
 
+    const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(api);
+
     return (
-      <Carousel setApi={setApi} className="w-full max-w-xl relative">
-        <CarouselContent>
+      <Carousel
+        setApi={setApi}
+        opts={{}}
+        plugins={[
+          WheelGesturesPlugin(),
+          ClassNamesPlugin({ snapped: "isSnapped" }),
+        ]}
+      >
+        <CarouselContent className="duration-150">
           {images.map((image, index) => (
-            <CarouselItem key={index}>
-              <Card className="rounded-none border-0">
-                <CardContent
-                  className={`flex aspect-square p-0 justify-center cursor-grab  active:cursor-grabbing  select-none overflow-clip  relative rounded-none bg-neutral-200 dark:bg-neutral-800 `}
-                >
-                  {/* <img
-                    src={image}
-                    className=" absolute aspect-auto object-cover w-full h-full blur-3xl saturate-200 brightness-125 border-0"
-                    alt={`Project ${index + 1}`}
-                  /> */}
-                  <img
-                    src={image}
-                    className="transition duration-200 object-contain z-10 border-0"
-                    alt={`Project ${index + 1}`}
-                  />
-                </CardContent>
-              </Card>
+            <CarouselItem
+              className="rounded-none border-0 p-0 justify-center cursor-grab  active:cursor-grabbing  select-none  relative flex basis-auto blur opacity-15 duration-200"
+              key={index}
+            >
+              {/* <img
+                src={image}
+                className=" absolute aspect-auto object-cover w-full h-full blur-3xl saturate-200 brightness-125 border-0"
+                alt={`Project ${index + 1}`}
+              /> */}
+              <img
+                src={image}
+                className="transition duration-200  max-h-screen sm:max-h-[calc(100vh-20px)] object-contain z-10 border-0"
+                alt={`Project ${index + 1}`}
+              />
             </CarouselItem>
           ))}
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />
-        {renderDots()}
+        <div className="absolute bottom-3 py-2 px-1.5 items-center flex gap-1  w-fit mx-auto inset-x-0 bg-white/80 dark:bg-black/80 rounded-full">
+          {scrollSnaps.map((_: any, index: number) => (
+            <DotButton
+              key={index}
+              onClick={() => onDotButtonClick(index)}
+              className={" size-1.5 rounded-full ".concat(
+                index === selectedIndex
+                  ? "bg-neutral-800 dark:bg-neutral-50"
+                  : "bg-neutral-950/30 dark:bg-neutral-50/30"
+              )}
+            />
+          ))}
+        </div>
       </Carousel>
     );
   }

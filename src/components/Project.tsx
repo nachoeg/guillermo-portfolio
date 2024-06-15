@@ -51,12 +51,12 @@ export function Project({ data }: { data: ProjectData }) {
       </DialogTrigger>
       <DialogContent
         onKeyDown={handleKeyPress}
-        className="sm:max-w-xl gap-0 overflow-clip border-0 dark:border "
+        className="overflow-hidden  max-w-screen sm:max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-4xl 2xl:max-w-5xl gap-0 border-0 dark:border"
       >
-        <DialogHeader className="p-4 ">
+        {/* <DialogHeader className="p-4 ">
           <DialogTitle>{data.title}</DialogTitle>
-          {/* <DialogDescription>{data.description}</DialogDescription> */}
-        </DialogHeader>
+          <DialogDescription>{data.description}</DialogDescription>
+        </DialogHeader> */}
         <CarouselProject ref={ref} images={data.images} />
         {/* <div className="flex items-center space-x-2">
           <div className="grid flex-1 gap-2">
