@@ -42,7 +42,7 @@ export function ModeToggle() {
       <span className="sm:hidden ">Cambiar tema</span>
 
       <Button
-        className="ring-0 hidden sm:flex"
+        className="ring-0 hidden sm:flex hover:shadow"
         variant="ghost"
         size="icon"
         onClick={handleClick}
