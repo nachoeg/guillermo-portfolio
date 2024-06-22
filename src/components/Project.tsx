@@ -18,19 +18,24 @@ interface ProjectData {
   images: string[];
 }
 
-export function Project({ data }: { data: ProjectData }) {
+export function Project({ data, index }: { data: ProjectData; index: number }) {
   const ref = useRef<{ handleKeyPress: (event: any) => void }>(null);
 
   const handleKeyPress = (event: any) => {
     ref.current?.handleKeyPress(event);
   };
+  const animationStyle = {
+    animationDelay: `${index * 150}ms`,
+    animationFillMode: "both",
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
         <div
-          className={
-            "flex aspect-square p-0 justify-center  select-none overflow-clip rounded-md group relative bg-neutral-200 dark:bg-neutral-800"
-          }
+          className={`flex aspect-square p-0 justify-center select-none overflow-clip rounded-md group relative bg-neutral-200 dark:bg-neutral-800  size-full animate-fade-in 
+          `}
+          style={animationStyle}
         >
           {data.images.length > 1 && (
             <div className="absolute top-3 right-3 z-20 pointer-events-none">
@@ -51,7 +56,9 @@ export function Project({ data }: { data: ProjectData }) {
       </DialogTrigger>
       <DialogContent
         onKeyDown={handleKeyPress}
-        className="overflow-hidden rounded-xl max-h-[calc(100vh-10px)] max-w-[calc(100vw-10px)] sm:max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-4xl 2xl:max-w-5xl gap-0 border-0 dark:border"
+        className={`overflow-hidden sm:rounded-none md:rounded-xl md:max-h-[calc(100vh-10px)] 
+        w-max max-w-full min-h-full md:min-h-min  md:max-w-3xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl
+         gap-0 border-0 sm:border border-neutral-800 `}
       >
         {/* <DialogHeader className="p-4 ">
           <DialogTitle>{data.title}</DialogTitle>
