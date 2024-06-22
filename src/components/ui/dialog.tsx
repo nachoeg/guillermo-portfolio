@@ -19,7 +19,7 @@ const DialogOverlay = React.forwardRef<
   <DialogPrimitive.Overlay
     ref={ref}
     className={cn(
-      "fixed inset-0 z-50 bg-black/95  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      "fixed inset-0 z-50 bg-black/90   data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
       className
     )}
     {...props}
@@ -33,10 +33,10 @@ const DialogContent = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <DialogPortal>
     <DialogOverlay>
-      <div className="flex sm:hidden absolute right-1 top-1 text-white  p-1  ring-offset-background  opacity-100 focus:outline-none  focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+      {/* <div className="flex sm:hidden absolute right-0 top-3 text-white  p-1  ring-offset-background  opacity-100 focus:outline-none  focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
         <X className="size-8" strokeWidth="2" />
         <span className="sr-only">Close</span>
-      </div>
+      </div> */}
     </DialogOverlay>
     <DialogPrimitive.Content
       ref={ref}
@@ -47,7 +47,7 @@ const DialogContent = React.forwardRef<
       {...props}
     >
       {children}
-      <DialogPrimitive.Close className="hidden sm:flex absolute right-2 top-2 rounded-full border bg-white hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:bg-black p-1  ring-offset-background  opacity-100 focus:outline-none  focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+      <DialogPrimitive.Close className=" absolute right-2 top-2 rounded-full border bg-white hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:bg-black p-1  ring-offset-background  opacity-100 focus:outline-none  focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
         <X className="size-5 " strokeWidth="2" />
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close>
