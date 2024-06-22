@@ -10,9 +10,16 @@ import { SheetTitle } from "@/components/ui/sheet";
 ---
 
 <header
-  class="flex flex-col gap-6 pt-3 pb-3 fixed bg-background px-2 sm:px-10 max-w-screen-xl w-full mx-auto inset-x-0 z-50"
+  class="flex flex-col gap-3 pt-3 pb-2 fixed bg-background/90 backdrop-blur-xl px-2 sm:px-10 max-w-screen-xl w-full mx-auto inset-x-0 z-50"
 >
   <nav class="flex justify-between">
+    <!-- <div class="flex items-center font-bold text-2xl sm:text-3xl">
+      <span
+        class="bg-slate-800 dark:bg-slate-500 leading-none px-0.5 rounded-md text-white dark:text-black mr-[0.05rem] dark:mr-0.5"
+        >G</span
+      >
+      <h1 class="text-slate-800 dark:text-slate-500">uillermo Escudero</h1>
+    </div> -->
     <h1 class="text-2xl sm:text-3xl font-bold leading-10">
       Guillermo Escudero
     </h1>
@@ -51,7 +58,7 @@ import { SheetTitle } from "@/components/ui/sheet";
       <li>
         <a href="https://www.instagram.com/escudero_guillermo/" target="_blank">
           <span class="sr-only">Instagram</span>
-          <Button variant="ghost" size="icon">
+          <Button className="hover:shadow" variant="ghost" size="icon">
             <Instagram class="size-7" />
           </Button>
         </a>
@@ -62,7 +69,7 @@ import { SheetTitle } from "@/components/ui/sheet";
           target="_blank"
         >
           <span class="sr-only"> WhatsApp </span>
-          <Button variant="ghost" size="icon">
+          <Button className="hover:shadow" variant="ghost" size="icon">
             <WhatsApp class="size-6" />
           </Button>
         </a>
@@ -70,7 +77,7 @@ import { SheetTitle } from "@/components/ui/sheet";
       <li>
         <a href="mailto:guiescudero@hotmail.com" target="_blank">
           <span class="sr-only"> Email </span>
-          <Button variant="ghost" size="icon">
+          <Button className="hover:shadow" variant="ghost" size="icon">
             <Mail class="size-6" />
           </Button>
         </a>
