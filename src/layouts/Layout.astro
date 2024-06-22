@@ -44,7 +44,7 @@ const { title } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class="min-w-full relative">
+  <body class="min-w-full min-h-screen flex flex-col relative">
     <slot />
   </body>
 </html>
@@ -99,5 +99,19 @@ const { title } = Astro.props;
   .isSnapped {
     filter: blur(0);
     opacity: 1;
+  }
+
+  @media screen and (min-width: 768px) {
+    .zoomIn .carouselImage {
+      --zoom: 1; /* control the zoom level */
+      --cursor: zoom-in; /* the cursor style */
+      /* the coordinate of the zoom */
+      --x: 50%;
+      --y: 50%;
+      /**/
+      transform: scale(var(--zoom));
+      transform-origin: var(--x) var(--y);
+      cursor: var(--cursor);
+    }
   }
 </style>
