@@ -40,26 +40,19 @@ export const CarouselProject = forwardRef<
     }, [api]);
 
     const renderDots = () => {
-      if (count <= 1) {
-        return null;
-      }
-      const dots = [];
-      for (let i = 0; i < count; i++) {
-        dots.push(
-          <button
-            key={i}
-            onClick={() => api?.scrollTo(i)}
-            className={`size-1.5 rounded-full mx-0.5 ${
-              current === i + 1
-                ? "bg-neutral-800 dark:bg-neutral-50"
-                : "bg-neutral-950/30 dark:bg-neutral-50/30"
-            }`}
-          />
-        );
-      }
       return (
-        <div className="absolute bottom-3 py-2 px-1 items-center flex w-fit mx-auto inset-x-0 bg-white/80 dark:bg-black/80 rounded-full">
-          {dots}
+        <div className="absolute bottom-3 py-1.5 px-1.5  flex gap-1  w-fit mx-auto inset-x-0 bg-white/80 dark:bg-black/80 rounded-full">
+          {scrollSnaps.map((_: any, index: number) => (
+            <DotButton
+              key={index}
+              onClick={() => onDotButtonClick(index)}
+              className={"size-1.5 rounded-full ".concat(
+                index === selectedIndex
+                  ? "bg-neutral-800 dark:bg-neutral-50"
+                  : "bg-neutral-950/30 dark:bg-neutral-50/30"
+              )}
+            />
+          ))}
         </div>
       );
     };
@@ -79,12 +72,40 @@ export const CarouselProject = forwardRef<
 
     const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(api);
 
+    const handleMouseMove = (event: any) => {
+      event.target.style.setProperty(
+        "--x",
+        100 *
+          ((event.clientX * 1.5 - (window.innerWidth - event.clientX)) /
+            event.target.offsetWidth) +
+          "%"
+      );
+      event.target.style.setProperty(
+        "--y",
+        100 *
+          ((event.clientY * 1.5 - (window.innerHeight - event.clientY)) /
+            event.target.offsetHeight) +
+          "%"
+      );
+    };
+
+    const handleZoomIn = (event: any) => {
+      console.log(event.target);
+
+      if (event.target.style.getPropertyValue("--zoom") === "1.5") {
+        event.target.style.setProperty("--zoom", 1);
+        event.target.style.setProperty("--cursor", "zoom-in");
+      } else {
+        event.target.style.setProperty("--zoom", 1.5);
+        event.target.style.setProperty("--cursor", "zoom-out");
+      }
+    };
+
     return (
       <Carousel
         setApi={setApi}
         opts={{
-          duration: 20,
-          // ,containScroll: false
+          skipSnaps: true,
         }}
         className="bg-black"
         plugins={[
@@ -92,40 +113,36 @@ export const CarouselProject = forwardRef<
           ClassNamesPlugin({ snapped: "isSnapped" }),
         ]}
       >
-        <CarouselContent className="w-full ">
+        <CarouselContent className="h-full">
           {images.map((image, index) => (
             <CarouselItem
-              className="rounded-none border-0 p-0 justify-center cursor-grab  active:cursor-grabbing  select-none  relative flex  w-full sm:w-auto basis-auto duration-200 hover-hover:blur-xl opacity-20 bg-neutral-800"
+              className={
+                "rounded-none border-0 p-0 cursor-grab active:cursor-grabbing justify-center select-none relative overflow-hidden flex max-w-full duration-500 sm:opacity-20 zoomIn"
+              }
               key={index}
+              onClick={handleZoomIn}
+              onMouseMove={handleMouseMove}
             >
-              {/* <img
-                src={image}
-                className=" absolute aspect-auto object-cover w-full h-full blur-3xl saturate-200 brightness-125 border-0"
-                alt={`Project ${index + 1}`}
-              /> */}
               <img
                 src={image}
-                className="max-w-screen max-h-screen  sm:max-h-[calc(100vh-20px)] object-contain z-10 border-0"
+                className="absolute aspect-auto object-cover w-full h-full blur-3xl brightness-50 border-0"
+                alt={`Project ${index + 1} background`}
+              />
+              <img
+                src={image}
+                className="max-w-screen max-h-screen carouselImage md:max-h-[calc(100vh-20px)] object-contain z-10 border-0 transition"
                 alt={`Project ${index + 1}`}
               />
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-        <div className="absolute bottom-3 py-2 px-1.5 items-center flex gap-1  w-fit mx-auto inset-x-0 bg-white/80 dark:bg-black/80 rounded-full">
-          {scrollSnaps.map((_: any, index: number) => (
-            <DotButton
-              key={index}
-              onClick={() => onDotButtonClick(index)}
-              className={" size-1.5 rounded-full ".concat(
-                index === selectedIndex
-                  ? "bg-neutral-800 dark:bg-neutral-50"
-                  : "bg-neutral-950/30 dark:bg-neutral-50/30"
-              )}
-            />
-          ))}
-        </div>
+        {scrollSnaps.length > 1 && (
+          <>
+            <CarouselPrevious />
+            <CarouselNext />
+            {renderDots()}
+          </>
+        )}
       </Carousel>
     );
   }
