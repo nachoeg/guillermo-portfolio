@@ -16,6 +16,7 @@ import {
   type Key,
 } from "react";
 import { DotButton, useDotButton } from "./ui/EmblaCarouselDotButton";
+import ImageProject from "./ImageProject";
 
 export const CarouselProject = forwardRef<
   { handleKeyPress: (event: any) => void },
@@ -37,7 +38,7 @@ export const CarouselProject = forwardRef<
       api.on("select", () => {
         setCurrent(api.selectedScrollSnap() + 1);
       });
-    }, [api]);
+    }, [api, api?.scrollSnapList().length]);
 
     const renderDots = () => {
       return (
@@ -53,6 +54,14 @@ export const CarouselProject = forwardRef<
               )}
             />
           ))}
+        </div>
+      );
+    };
+
+    const renderCounter = () => {
+      return (
+        <div className="absolute top-6 sm:top-3 left-3 bg-white/80 px-1.5 py-0.5  pointer-events-none tracking-widest rounded-full text-xs dark:bg-black/80">
+          {current}/{count}
         </div>
       );
     };
@@ -107,7 +116,7 @@ export const CarouselProject = forwardRef<
         opts={{
           skipSnaps: true,
         }}
-        className="bg-black"
+        className="bg-black min-w-0"
         plugins={[
           WheelGesturesPlugin(),
           ClassNamesPlugin({ snapped: "isSnapped" }),
@@ -117,22 +126,13 @@ export const CarouselProject = forwardRef<
           {images.map((image, index) => (
             <CarouselItem
               className={
-                "rounded-none border-0 p-0 cursor-grab active:cursor-grabbing justify-center select-none relative overflow-hidden flex max-w-full duration-500 sm:opacity-20 zoomIn"
+                "rounded-none border-0 p-0 cursor-grab active:cursor-grabbing select-none overflow-hidden flex max-w-full duration-500 sm:opacity-20 zoomIn relative justify-center"
               }
               key={index}
               onClick={handleZoomIn}
               onMouseMove={handleMouseMove}
             >
-              <img
-                src={image}
-                className="absolute aspect-auto object-cover w-full h-full blur-3xl brightness-50 border-0"
-                alt={`Project ${index + 1} background`}
-              />
-              <img
-                src={image}
-                className="max-w-screen max-h-screen carouselImage md:max-h-[calc(100vh-20px)] object-contain z-10 border-0 transition"
-                alt={`Project ${index + 1}`}
-              />
+              <ImageProject image={image} index={index}></ImageProject>
             </CarouselItem>
           ))}
         </CarouselContent>
@@ -141,6 +141,7 @@ export const CarouselProject = forwardRef<
             <CarouselPrevious />
             <CarouselNext />
             {renderDots()}
+            {renderCounter()}
           </>
         )}
       </Carousel>
