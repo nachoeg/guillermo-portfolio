@@ -20,7 +20,7 @@ function ImageProject({ image, index }: { image: string; index: number }) {
       <img
         src={image}
         onLoad={handleImageLoad}
-        className={`max-w-screen max-h-screen carouselImage md:max-h-[calc(100vh-20px)] object-contain z-10 border-0 transition ${
+        className={`max-w-screen max-h-screen carouselImage md:max-h-[calc(100vh-20px)] object-contain z-10 border-0 md:transition ${
           loaded ? "opacity-100" : "opacity-0"
         }`}
         alt={`Project ${index + 1}`}
