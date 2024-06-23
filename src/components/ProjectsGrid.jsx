@@ -1,4 +1,4 @@
-import { Project } from "@/components/Project";
+import { Project } from "./Project";
 import { useStore } from "@nanostores/react";
 import { tagStore } from "../store.js";
 
