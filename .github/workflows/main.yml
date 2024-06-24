@@ -1,0 +1,15 @@
+name: keep-alive
+
+on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '0 5,17 * * *'
+    
+jobs:
+  fetch-db:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 'fetch' 
+        run: curl -L https://guillermoescudero.vercel.app/
+    
