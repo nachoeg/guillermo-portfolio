@@ -3,7 +3,7 @@ name: keep-alive
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '53 5,17 * * *'
+    - cron:  '60 5,17 * * *'
     
 jobs:
   fetch-db:
