@@ -1,5 +1,8 @@
-import PROJECTS from "./projects";
+import { supabase } from "../lib/supabase";
 
-const TAGS = ["Todo", ...new Set(PROJECTS.flatMap((project) => project.tags))];
+const { data, error } = await supabase.from("projects").select("*");
+if (error) console.error("Error loading projects", error);
+const PROJECTS = data;
+const TAGS = [...new Set(PROJECTS.flatMap((project) => project.tags))];
 
 export default TAGS;
