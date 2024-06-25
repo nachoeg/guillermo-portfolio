@@ -20,8 +20,8 @@ import ImageProject from "./ImageProject";
 
 export const CarouselProject = forwardRef<
   { handleKeyPress: (event: any) => void },
-  { images: string[] }
->(({ images }, ref) => {
+  { images: string[]; title: string }
+>(({ images, title }, ref) => {
   {
     const [api, setApi] = useState<CarouselApi>();
     const [current, setCurrent] = useState(0);
@@ -62,6 +62,14 @@ export const CarouselProject = forwardRef<
       return (
         <div className="absolute top-6 sm:top-3 left-3 bg-white/80 px-1.5 py-0.5  pointer-events-none tracking-widest rounded-full text-xs dark:bg-black/80">
           {current}/{count}
+        </div>
+      );
+    };
+
+    const renderTitle = () => {
+      return (
+        <div className="absolute top-6 sm:top-3 w-fit mx-auto inset-x-0 bg-white/80 px-2 py-0.5  pointer-events-none  rounded-full text-sm dark:bg-black/80">
+          {title}
         </div>
       );
     };
@@ -142,6 +150,7 @@ export const CarouselProject = forwardRef<
             <CarouselNext />
             {renderDots()}
             {renderCounter()}
+            {title && renderTitle()}
           </>
         )}
       </Carousel>
