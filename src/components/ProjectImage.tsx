@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Loading from "./Loading";
 
-function ImageProject({ image, index }: { image: string; index: number }) {
+function ProjectImage({ image, index }: { image: string; index: number }) {
   const [loaded, setLoaded] = useState(false);
   const handleImageLoad = () => {
     setLoaded(true);
@@ -29,4 +29,4 @@ function ImageProject({ image, index }: { image: string; index: number }) {
   );
 }
 
-export default ImageProject;
+export default ProjectImage;

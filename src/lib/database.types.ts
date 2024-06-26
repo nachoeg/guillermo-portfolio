@@ -9,29 +9,52 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      images: {
+        Row: {
+          created_at: string;
+          id: string;
+          project: number;
+          url: string;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          project: number;
+          url: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          project?: number;
+          url?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "images_project_fkey";
+            columns: ["project"];
+            isOneToOne: false;
+            referencedRelation: "projects";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
       projects: {
         Row: {
           created_at: string;
-          description: string | null;
           id: number;
-          images: string[];
-          tags: string | null;
+          tags: string[];
           title: string | null;
         };
         Insert: {
           created_at?: string;
-          description?: string | null;
           id?: number;
-          images: string[];
-          tags?: string | null;
+          tags: string[];
           title?: string | null;
         };
         Update: {
           created_at?: string;
-          description?: string | null;
           id?: number;
-          images?: string[];
-          tags?: string | null;
+          tags?: string[];
           title?: string | null;
         };
         Relationships: [];
