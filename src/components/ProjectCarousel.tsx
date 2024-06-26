@@ -90,24 +90,32 @@ export const ProjectCarousel = forwardRef<
 
     const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(api);
 
-    const carouselItemRef = useRef<HTMLDivElement>(null);
+    const itemsRef = useRef<Array<HTMLDivElement | null>>([]);
 
-    const handleMouseMove = (event: any) => {
-      if (carouselItemRef.current) {
-        carouselItemRef.current.style.setProperty(
-          "--x",
-          100 *
-            ((event.clientX * 1.5 - (window.innerWidth - event.clientX)) /
-              carouselItemRef.current.offsetWidth) +
-            "%"
-        );
-        carouselItemRef.current.style.setProperty(
-          "--y",
-          100 *
-            ((event.clientY * 1.5 - (window.innerHeight - event.clientY)) /
-              carouselItemRef.current.offsetHeight) +
-            "%"
-        );
+    const handleMouseMove = (
+      event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+      index: number
+    ) => {
+      if (
+        itemsRef.current[index] !== null ||
+        itemsRef.current[index] !== undefined
+      ) {
+        if (itemsRef.current[index]) {
+          itemsRef.current[index]?.style.setProperty(
+            "--x",
+            100 *
+              ((event.clientX * 1.5 - (window.innerWidth - event.clientX)) /
+                (itemsRef.current[index]?.offsetWidth ?? 1)) +
+              "%"
+          );
+          itemsRef.current[index]?.style.setProperty(
+            "--y",
+            100 *
+              ((event.clientY * 1.5 - (window.innerHeight - event.clientY)) /
+                (itemsRef.current[index]?.offsetHeight ?? 1)) +
+              "%"
+          );
+        }
       }
     };
 
@@ -139,10 +147,12 @@ export const ProjectCarousel = forwardRef<
               className={
                 "rounded-none border-0 p-0 cursor-grab active:cursor-grabbing select-none overflow-hidden flex max-w-full duration-500 sm:opacity-20 zoomIn relative justify-center"
               }
-              ref={carouselItemRef}
+              ref={(element) => (itemsRef.current[index] = element)}
               key={index}
               onClick={handleZoomIn}
-              onMouseMove={handleMouseMove}
+              onMouseMove={(
+                event: React.MouseEvent<HTMLDivElement, MouseEvent>
+              ) => handleMouseMove(event, index)}
             >
               <ProjectImage image={image.url} index={index}></ProjectImage>
             </CarouselItem>
