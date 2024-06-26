@@ -114,13 +114,16 @@ const { title } = Astro.props;
   }
 
   @media screen and (min-width: 768px) {
-    .zoomIn .carouselImage {
+    .zoomIn {
       --zoom: 1; /* control the zoom level */
       --cursor: zoom-in; /* the cursor style */
       /* the coordinate of the zoom */
       --x: 50%;
       --y: 50%;
       /**/
+    }
+
+    .carouselImage {
       transform: scale(var(--zoom));
       transform-origin: var(--x) var(--y);
       cursor: var(--cursor);

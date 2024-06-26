@@ -12,15 +12,16 @@ import {
   forwardRef,
   useEffect,
   useImperativeHandle,
+  useRef,
   useState,
   type Key,
 } from "react";
 import { DotButton, useDotButton } from "./ui/EmblaCarouselDotButton";
-import ImageProject from "./ImageProject";
+import ProjectImage from "./ProjectImage";
 
-export const CarouselProject = forwardRef<
+export const ProjectCarousel = forwardRef<
   { handleKeyPress: (event: any) => void },
-  { images: string[]; title: string }
+  { images: Image[]; title: string }
 >(({ images, title }, ref) => {
   {
     const [api, setApi] = useState<CarouselApi>();
@@ -89,26 +90,28 @@ export const CarouselProject = forwardRef<
 
     const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(api);
 
+    const carouselItemRef = useRef<HTMLDivElement>(null);
+
     const handleMouseMove = (event: any) => {
-      event.target.style.setProperty(
-        "--x",
-        100 *
-          ((event.clientX * 1.5 - (window.innerWidth - event.clientX)) /
-            event.target.offsetWidth) +
-          "%"
-      );
-      event.target.style.setProperty(
-        "--y",
-        100 *
-          ((event.clientY * 1.5 - (window.innerHeight - event.clientY)) /
-            event.target.offsetHeight) +
-          "%"
-      );
+      if (carouselItemRef.current) {
+        carouselItemRef.current.style.setProperty(
+          "--x",
+          100 *
+            ((event.clientX * 1.5 - (window.innerWidth - event.clientX)) /
+              carouselItemRef.current.offsetWidth) +
+            "%"
+        );
+        carouselItemRef.current.style.setProperty(
+          "--y",
+          100 *
+            ((event.clientY * 1.5 - (window.innerHeight - event.clientY)) /
+              carouselItemRef.current.offsetHeight) +
+            "%"
+        );
+      }
     };
 
     const handleZoomIn = (event: any) => {
-      console.log(event.target);
-
       if (event.target.style.getPropertyValue("--zoom") === "1.5") {
         event.target.style.setProperty("--zoom", 1);
         event.target.style.setProperty("--cursor", "zoom-in");
@@ -136,11 +139,12 @@ export const CarouselProject = forwardRef<
               className={
                 "rounded-none border-0 p-0 cursor-grab active:cursor-grabbing select-none overflow-hidden flex max-w-full duration-500 sm:opacity-20 zoomIn relative justify-center"
               }
+              ref={carouselItemRef}
               key={index}
               onClick={handleZoomIn}
               onMouseMove={handleMouseMove}
             >
-              <ImageProject image={image} index={index}></ImageProject>
+              <ProjectImage image={image.url} index={index}></ProjectImage>
             </CarouselItem>
           ))}
         </CarouselContent>
