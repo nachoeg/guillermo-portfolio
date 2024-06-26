@@ -1,12 +1,12 @@
 ---
 import Filler from "@/components/Filler";
 import Footer from "@/components/Footer.astro";
-import Main from "@/components/Main.astro";
 import Header from "@/components/Header.astro";
 import Layout from "@/layouts/Layout.astro";
 import { supabase } from "../lib/supabase";
 import AdminTools from "@/components/AdminTools";
 import { Toaster } from "@/components/ui/sonner";
+import { ProjectsGrid } from "@/components/ProjectsGrid";
 
 const { cookies, redirect } = Astro;
 
@@ -38,7 +38,7 @@ if (error) {
   <Header>
     <AdminTools client:load />
   </Header>
-  <Toaster client:load />
-  <Main />
+  <Toaster client:only="react" />
+  <ProjectsGrid client:only="react" />
   <Footer />
 </Layout>

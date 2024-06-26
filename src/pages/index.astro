@@ -1,13 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
-import Main from "../components/Main.astro";
-import Filler from "../components/Filler.astro";
+import { ProjectsGrid } from "../components/ProjectsGrid";
 import Footer from "../components/Footer.astro";
 ---
 
 <Layout title="Guillermo Escudero">
   <Header />
-  <Main />
+  <ProjectsGrid client:only="react" />
   <Footer />
 </Layout>
