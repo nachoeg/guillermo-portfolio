@@ -5,7 +5,7 @@ import { Input } from "./ui/input";
 
 function AdminTools() {
   return (
-    <div className="flex flex-wrap gap-y-2 gap-x-2 [&_button]:shadow ">
+    <div className="flex flex-wrap gap-y-2 gap-x-2 [&_button]:shadow animate-fade-in">
       <AddProject />
       <form method="post" action="/api/project/delete" className="flex">
         <Input
