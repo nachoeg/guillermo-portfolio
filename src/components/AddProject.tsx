@@ -33,7 +33,7 @@ const tags: Option[] = TAGS.map((tag) => ({
   value: tag,
 }));
 
-const MAX_FILE_SIZE = 50000000;
+const MAX_FILE_SIZE = 5000000;
 const ACCEPTED_IMAGE_TYPES = [
   "image/jpeg",
   "image/jpg",
@@ -41,18 +41,35 @@ const ACCEPTED_IMAGE_TYPES = [
   "image/webp",
 ];
 
+const validateImageSize = (files: FileList) => {
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    if (file.size > MAX_FILE_SIZE) {
+      return false;
+    }
+  }
+  return true;
+};
+
+const validateImageType = (files: FileList) => {
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
+      return false;
+    }
+  }
+  return true;
+};
+
 const formSchema = z.object({
   title: z.string().max(50),
   tags: z.array(z.any()),
   images: z
     .any()
+    .refine(validateImageSize, "El tamaño máximo es de 5MB")
     .refine(
-      (files) => files?.[0]?.size <= MAX_FILE_SIZE,
-      `Max image size is 5MB.`
-    )
-    .refine(
-      (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
-      "Solo se soportan los archivos de tipo .jpg, .jpeg, .png y .webp."
+      validateImageType,
+      "Sólo se soportan los archivos de tipo .jpg, .jpeg, .png y .webp"
     ),
 });
 
@@ -64,7 +81,33 @@ export function AddProject() {
     },
   });
 
+  // FALTA BORRAR IMAGENES SI HAY ERROR AL SUBIR EL PROYECTO CUANDO SE SUBEN LAS IMAGENES
   async function uploadImages(files: FileList) {
+    const images: string[] = [];
+    for (const image of files) {
+      const formData = new FormData();
+      formData.append("file", image);
+      try {
+        const response = await fetch("/api/project/uploadProject", {
+          method: "POST",
+          body: formData,
+        });
+        if (response.ok) {
+          const url = await response.text();
+          images.push(url);
+          toast.success("Imagen subida");
+        } else {
+          toast.error("Error al subir imagen");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    console.log(images);
+    return images;
+  }
+
+  async function uploadImagesWithCompression(files: FileList) {
     const images: string[] = [];
     for (const image of files) {
       console.log(image.size);
@@ -75,7 +118,7 @@ export function AddProject() {
             console.log(result.size);
             const formData = new FormData();
             formData.append("file", result);
-            fetch("/api/project/upload", {
+            fetch("/api/project/uploadProject", {
               method: "POST",
               body: formData,
             })
@@ -111,13 +154,13 @@ export function AddProject() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     setLoading(true);
-    const images = await uploadImages(values.images);
+    // const images = await uploadImages(values.images);
     const body = new FormData();
     body.append("title", values.title);
     body.append("tags", JSON.stringify(values.tags.map((tag) => tag.value)));
-    body.append("images", JSON.stringify(images));
+    // body.append("images", JSON.stringify(images));
     console.log(body);
-    const response = await fetch("/api/project/add", {
+    const response = await fetch("/api/project/addProject", {
       method: "POST",
       body: body,
     });

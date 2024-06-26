@@ -2,21 +2,19 @@ import type { APIRoute } from "astro";
 import { supabase } from "../../../lib/supabase";
 
 export const POST: APIRoute = async ({ request, redirect }) => {
-  console.log(request);
   const formData = await request.formData();
   console.log(formData);
   const title = formData.get("title")?.toString();
-  const tags = JSON.parse(formData.get("tags")?.toString() || "[]");
-  const images = JSON.parse(formData.get("images")?.toString() || "[]");
-  if (tags === "[]" || formData.get("images") === "[]")
+  const tags = formData.get("tags")?.toString();
+  if (tags === undefined || tags === "[]")
     return new Response("All fields are required", { status: 400 });
+  const parsedTags = JSON.parse(tags);
   const response = await supabase
     .from("projects")
     .insert([
       {
         title,
-        tags,
-        images,
+        tags: parsedTags,
       },
     ])
     .select();
