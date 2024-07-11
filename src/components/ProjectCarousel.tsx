@@ -164,7 +164,7 @@ export const ProjectCarousel = forwardRef<
           {images.map((image, index) => (
             <CarouselItem
               className={
-                "rounded-none border-0 p-0 select-none overflow-hidden flex max-w-full duration-500 sm:opacity-20 zoomIn relative justify-center"
+                "rounded-none border-0 p-0 select-none overflow-hidden flex max-w-full sm:opacity-20 zoomIn relative justify-center"
               }
               ref={(element) => (itemsRef.current[index] = element)}
               key={index}
