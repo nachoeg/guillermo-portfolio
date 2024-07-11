@@ -29,12 +29,15 @@ export function Project({
       <div className="relative h-fit animate-fade-in">
         <DialogTrigger asChild>
           <div
-            className={`flex aspect-square p-0 justify-center select-none overflow-clip rounded-md group relative bg-neutral-200 dark:bg-neutral-800 size-full`}
+            className={`flex aspect-square p-0 justify-center select-none overflow-clip rounded-md group relative bg-neutral-200 dark:bg-neutral-900 size-full`}
             style={animationStyle}
           >
+            {/* <div className="absolute top-3 bg-background px-1 rounded-md drop-shadow left-3 z-20 pointer-events-none">
+              {data.id}
+            </div> */}
             {data.images.length > 1 && (
               <div className="absolute top-3 right-3 z-20 pointer-events-none">
-                <Squares className="fill-white drop-shadow"></Squares>
+                <Squares className="fill-white drop-shadow size-7"></Squares>
               </div>
             )}
             <ProjectThumbnail src={data.images[0].url} alt={data.title} />
