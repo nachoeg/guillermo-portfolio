@@ -192,7 +192,7 @@ export const ProjectCarousel = forwardRef<
                 imageId={images[selectedIndex]?.id}
               ></ProjectDeleteButton>
             )}
-            <ProjectAddButton></ProjectAddButton>
+            <ProjectAddButton id={id}></ProjectAddButton>
           </div>
         )}
         {scrollSnaps.length > 1 && (
