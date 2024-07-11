@@ -1,10 +1,10 @@
 ---
-import Filler from "@/components/Filler";
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
 import Layout from "@/layouts/Layout.astro";
 import { supabase } from "../lib/supabase";
-import AdminTools from "@/components/AdminTools";
+import HeaderDashboard from "@/components/HeaderDashboard";
+import ProjectDashboard from "@/components/ProjectDashboard";
 import { Toaster } from "@/components/ui/sonner";
 import { ProjectsGrid } from "@/components/ProjectsGrid";
 
@@ -36,9 +36,9 @@ if (error) {
 
 <Layout title="Dashboard">
   <Header>
-    <AdminTools client:load />
+    <HeaderDashboard client:load />
   </Header>
   <Toaster client:only="react" />
-  <ProjectsGrid client:only="react" />
+  <ProjectsGrid isAuth={true} client:only="react" />
   <Footer />
 </Layout>

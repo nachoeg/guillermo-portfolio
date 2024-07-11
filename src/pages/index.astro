@@ -7,6 +7,6 @@ import Footer from "../components/Footer.astro";
 
 <Layout title="Guillermo Escudero">
   <Header />
-  <ProjectsGrid client:only="react" />
+  <ProjectsGrid isAuth={false} client:only="react" />
   <Footer />
 </Layout>
