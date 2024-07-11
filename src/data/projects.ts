@@ -14,7 +14,9 @@ const getProjects = async (): Promise<Project[]> => {
   const updatedProjects = projects
     ? projects.map((project) => {
         const projectImages = images
-          ? images.filter((image) => image.project === project.id)
+          ? images
+              .filter((image) => image.project === project.id)
+              .sort((a, b) => a.created_at.localeCompare(b.created_at))
           : [];
         if (projectImages.length === 0) {
           projectImages.push({
@@ -29,7 +31,9 @@ const getProjects = async (): Promise<Project[]> => {
         return { ...project, images: projectImages };
       })
     : [];
-  return updatedProjects;
+  return updatedProjects.sort((a, b) =>
+    a.created_at.localeCompare(b.created_at)
+  );
 };
 
 export default getProjects;
