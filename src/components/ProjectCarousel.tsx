@@ -14,15 +14,16 @@ import {
   useImperativeHandle,
   useRef,
   useState,
-  type Key,
+  cloneElement,
 } from "react";
 import { DotButton, useDotButton } from "./ui/EmblaCarouselDotButton";
 import ProjectImage from "./ProjectImage";
+import ProjectDashboard from "./ProjectDashboard";
 
 export const ProjectCarousel = forwardRef<
   { handleKeyPress: (event: any) => void },
-  { images: Image[]; title: string }
->(({ images, title }, ref) => {
+  { images: Image[]; title: string; tags: string[]; isAuth: boolean }
+>(({ images, title, tags, isAuth }, ref) => {
   {
     const [api, setApi] = useState<CarouselApi>();
     const [current, setCurrent] = useState(0);
@@ -119,13 +120,16 @@ export const ProjectCarousel = forwardRef<
       }
     };
 
-    const handleZoomIn = (event: any) => {
-      if (event.target.style.getPropertyValue("--zoom") === "1.5") {
-        event.target.style.setProperty("--zoom", 1);
-        event.target.style.setProperty("--cursor", "zoom-in");
+    const handleZoomIn = (event: any, index: number) => {
+      const image = itemsRef.current[index]?.querySelector(
+        ".carouselImage"
+      ) as HTMLElement;
+      if (image.style.getPropertyValue("--zoom") === "1.5") {
+        image.style.setProperty("--zoom", "1");
+        itemsRef.current[index]?.style.setProperty("--cursor", "zoom-in");
       } else {
-        event.target.style.setProperty("--zoom", 1.5);
-        event.target.style.setProperty("--cursor", "zoom-out");
+        image.style.setProperty("--zoom", "1.5");
+        itemsRef.current[index]?.style.setProperty("--cursor", "zoom-out");
       }
     };
 
@@ -135,7 +139,7 @@ export const ProjectCarousel = forwardRef<
         opts={{
           skipSnaps: true,
         }}
-        className="bg-black min-w-0"
+        className="bg-black min-w-0 overflow-hidden rounded-none md:rounded-xl "
         plugins={[
           WheelGesturesPlugin(),
           ClassNamesPlugin({ snapped: "isSnapped" }),
@@ -145,11 +149,13 @@ export const ProjectCarousel = forwardRef<
           {images.map((image, index) => (
             <CarouselItem
               className={
-                "rounded-none border-0 p-0 cursor-grab active:cursor-grabbing select-none overflow-hidden flex max-w-full duration-500 sm:opacity-20 zoomIn relative justify-center"
+                "rounded-none border-0 p-0 select-none overflow-hidden flex max-w-full duration-500 sm:opacity-20 zoomIn relative justify-center"
               }
               ref={(element) => (itemsRef.current[index] = element)}
               key={index}
-              onClick={handleZoomIn}
+              onClick={(event: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
+                handleZoomIn(event, index)
+              }
               onMouseMove={(
                 event: React.MouseEvent<HTMLDivElement, MouseEvent>
               ) => handleMouseMove(event, index)}
@@ -158,6 +164,15 @@ export const ProjectCarousel = forwardRef<
             </CarouselItem>
           ))}
         </CarouselContent>
+
+        {isAuth && (
+          <ProjectDashboard
+            title={title}
+            current={current}
+            count={count}
+            tags={tags}
+          />
+        )}
         {scrollSnaps.length > 1 && (
           <>
             <CarouselPrevious />

@@ -1,10 +1,11 @@
 import { Project } from "./Project";
 import { useStore } from "@nanostores/react";
 import { tagStore } from "../store.js";
-import projects from "../data/projects.js";
+import { projectsStore } from "../store.js";
 
-export function ProjectsGrid() {
+export function ProjectsGrid({ isAuth }: { isAuth: boolean }) {
   const selectedTag = useStore(tagStore);
+  const projects = useStore(projectsStore);
   console.log(projects);
   function filterProjects() {
     if (selectedTag === "Todo") {
@@ -26,7 +27,12 @@ export function ProjectsGrid() {
       ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2">
           {filteredProjects.map((project, index) => (
-            <Project key={index} data={project} index={index} />
+            <Project
+              key={index}
+              data={project}
+              index={index}
+              isAuth={isAuth}
+            ></Project>
           ))}
         </div>
       )}
