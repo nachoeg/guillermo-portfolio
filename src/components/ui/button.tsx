@@ -21,6 +21,8 @@ const buttonVariants = cva(
         primary:
           "bg-blue-500 dark:bg-blue-600 text-white hover:bg-blue-500/90 hover:bg-blue-600/90",
         success: "bg-sucess text-success-foreground ",
+        carousel:
+          "bg-white hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:bg-neutral-950 border",
       },
       size: {
         default: "h-10 px-4 py-2",
