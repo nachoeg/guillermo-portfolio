@@ -18,7 +18,16 @@ import {
 } from "react";
 import { DotButton, useDotButton } from "./ui/EmblaCarouselDotButton";
 import ProjectImage from "./ProjectImage";
-import ProjectDashboard from "./ProjectDashboard";
+import ProjectEditButton from "./ProjectEditButton";
+import ProjectDeleteButton from "./ProjectDeleteButton";
+import ProjectAddButton from "./ProjectAddButton";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
+import { Button } from "./ui/button";
 
 export const ProjectCarousel = forwardRef<
   { handleKeyPress: (event: any) => void },
@@ -172,13 +181,19 @@ export const ProjectCarousel = forwardRef<
         </CarouselContent>
 
         {isAuth && (
-          <ProjectDashboard
-            id={id}
-            title={title}
-            current={current}
-            count={count}
-            tags={tags}
-          />
+          <div className="absolute bottom-3 right-3 flex gap-2 [&_button]:shadow ">
+            <ProjectEditButton
+              id={id}
+              title={title}
+              tags={tags}
+            ></ProjectEditButton>
+            {scrollSnaps.length > 1 && (
+              <ProjectDeleteButton
+                imageId={images[selectedIndex]?.id}
+              ></ProjectDeleteButton>
+            )}
+            <ProjectAddButton></ProjectAddButton>
+          </div>
         )}
         {scrollSnaps.length > 1 && (
           <>
