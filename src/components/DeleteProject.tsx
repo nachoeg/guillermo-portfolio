@@ -56,7 +56,7 @@ function DeleteProject({ id }: { id: number }) {
             Estas seguro que quieres borrar este proyecto?
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="space-y-4">
+        <DialogFooter className="gap-y-2">
           <DialogClose asChild>
             <Button variant={"secondary"}>Cancelar</Button>
           </DialogClose>
