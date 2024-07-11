@@ -14,7 +14,7 @@ import getProjects from "@/data/projects";
 import { projectsStore, tagsStore } from "@/store";
 import { Spinner } from "./ui/spinner";
 import { useState } from "react";
-import getTags from "@/data/tags";
+import getTags from "@/data/tags.js";
 
 function DeleteProject({ id }: { id: number }) {
   const [loading, setLoading] = useState(false);

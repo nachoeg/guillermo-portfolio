@@ -16,7 +16,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { projectsStore, tagsStore } from "@/store";
-import getTags from "@/data/tags";
+import getTags from "@/data/tags.js";
 import getProjects from "@/data/projects";
 import {
   validateImageSize,

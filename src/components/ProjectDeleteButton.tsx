@@ -5,7 +5,6 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import LoadingButton from "./LoadingButton";
 import { projectsStore, tagsStore } from "@/store";
 import getProjects from "@/data/projects";
-import getTags from "@/data/tags";
 import { toast } from "sonner";
 
 function ProjectDeleteButton({ imageId }: { imageId: string }) {

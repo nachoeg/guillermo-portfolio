@@ -20,7 +20,7 @@ import { toast } from "sonner";
 import { projectsStore, tagsStore } from "@/store";
 import { useStore } from "@nanostores/react";
 import getProjects from "@/data/projects";
-import getTags from "@/data/tags";
+import getTags from "@/data/tags.js";
 import LoadingButton from "./LoadingButton";
 
 function ProjectEditButton({
