@@ -16,6 +16,7 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   });
 
   if (error) {
+    console.log(error);
     return new Response(error.message, { status: 500 });
   }
 
@@ -26,5 +27,5 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   cookies.set("sb-refresh-token", refresh_token, {
     path: "/",
   });
-  return redirect("/dashboard");
+  return new Response(JSON.stringify({ message: "Login successful" }));
 };

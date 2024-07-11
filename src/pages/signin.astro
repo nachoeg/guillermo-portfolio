@@ -1,5 +1,7 @@
 ---
+import SignInForm from "@/components/SignInForm";
 import Layout from "../layouts/Layout.astro";
+import { Toaster } from "sonner";
 
 const { cookies, redirect } = Astro;
 
@@ -12,12 +14,6 @@ if (accessToken && refreshToken) {
 ---
 
 <Layout title="Sign in">
-  <form action="/api/auth/signin" method="post">
-    <h1>Sign in</h1>
-    <label for="email">Email</label>
-    <input class="text-black" type="email" name="email" id="email" />
-    <label for="password">Password</label>
-    <input class="text-black" type="password" name="password" id="password" />
-    <button type="submit">Login</button>
-  </form>
+  <SignInForm client:load />
+  <Toaster client:only="react" />
 </Layout>
