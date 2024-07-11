@@ -15,6 +15,7 @@ import { projectsStore, tagsStore } from "@/store";
 import { Spinner } from "./ui/spinner";
 import { useState } from "react";
 import getTags from "@/data/tags.js";
+import LoadingButton from "./LoadingButton";
 
 function DeleteProject({ id }: { id: number }) {
   const [loading, setLoading] = useState(false);
@@ -55,7 +56,7 @@ function DeleteProject({ id }: { id: number }) {
             Estas seguro que quieres borrar este proyecto?
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter>
+        <DialogFooter className="space-y-4">
           <DialogClose asChild>
             <Button variant={"secondary"}>Cancelar</Button>
           </DialogClose>
@@ -64,14 +65,7 @@ function DeleteProject({ id }: { id: number }) {
             variant={"destructive"}
             onClick={handleDelete}
           >
-            {loading ? (
-              <div className="flex gap-1 items-center">
-                <Spinner size={"small"} className="text-neutral-50" />
-                Cargando...
-              </div>
-            ) : (
-              "Borrar"
-            )}
+            {loading ? <LoadingButton textColor="text-white" /> : "Borrar"}
           </Button>
         </DialogFooter>
       </DialogContent>
