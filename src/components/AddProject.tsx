@@ -15,7 +15,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import TAGS from "@/data/tags.js";
 import Compressor from "compressorjs";
 import { Input } from "@/components/ui/input";
 import { z } from "zod";
@@ -27,53 +26,56 @@ import MultipleSelector, {
 } from "@/components/ui/multiple-selector";
 import { useState } from "react";
 import { Spinner } from "./ui/spinner";
-
-const tags: Option[] = TAGS.map((tag) => ({
-  label: tag,
-  value: tag,
-}));
-
-const MAX_FILE_SIZE = 5000000;
-const ACCEPTED_IMAGE_TYPES = [
-  "image/jpeg",
-  "image/jpg",
-  "image/png",
-  "image/webp",
-];
-
-const validateImageSize = (files: FileList) => {
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
-    if (file.size > MAX_FILE_SIZE) {
-      return false;
-    }
-  }
-  return true;
-};
-
-const validateImageType = (files: FileList) => {
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
-    if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
-      return false;
-    }
-  }
-  return true;
-};
-
-const formSchema = z.object({
-  title: z.string().max(50),
-  tags: z.array(z.any()),
-  images: z
-    .any()
-    .refine(validateImageSize, "El tamaño máximo es de 5MB")
-    .refine(
-      validateImageType,
-      "Sólo se soportan los archivos de tipo .jpg, .jpeg, .png y .webp"
-    ),
-});
+import getProjects from "@/data/projects";
+import { projectsStore, tagsStore } from "@/store";
+import getTags from "@/data/tags.js";
+import { useStore } from "@nanostores/react";
 
 export function AddProject() {
+  const tags: Option[] = useStore(tagsStore).map((tag) => ({
+    label: tag,
+    value: tag,
+  }));
+
+  const MAX_FILE_SIZE = 5000000;
+  const ACCEPTED_IMAGE_TYPES = [
+    "image/jpeg",
+    "image/jpg",
+    "image/png",
+    "image/webp",
+  ];
+
+  const validateImageSize = (files: FileList) => {
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      if (file.size > MAX_FILE_SIZE) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const validateImageType = (files: FileList) => {
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const formSchema = z.object({
+    title: z.string().max(50),
+    tags: z.array(z.any()),
+    images: z
+      .any()
+      .refine(validateImageSize, "El tamaño máximo es de 5MB")
+      .refine(
+        validateImageType,
+        "Sólo se soportan los archivos de tipo .jpg, .jpeg, .png y .webp"
+      ),
+  });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -81,20 +83,18 @@ export function AddProject() {
     },
   });
 
-  // FALTA BORRAR IMAGENES SI HAY ERROR AL SUBIR EL PROYECTO CUANDO SE SUBEN LAS IMAGENES
-  async function uploadImages(files: FileList) {
-    const images: string[] = [];
+  async function uploadImages(files: FileList, id: number) {
     for (const image of files) {
       const formData = new FormData();
       formData.append("file", image);
+      formData.append("projectId", id.toString());
       try {
-        const response = await fetch("/api/project/uploadProject", {
+        const response = await fetch("/api/project/uploadImage", {
           method: "POST",
           body: formData,
         });
+        console.log(response);
         if (response.ok) {
-          const url = await response.text();
-          images.push(url);
           toast.success("Imagen subida");
         } else {
           toast.error("Error al subir imagen");
@@ -103,8 +103,6 @@ export function AddProject() {
         console.log(error);
       }
     }
-    console.log(images);
-    return images;
   }
 
   async function uploadImagesWithCompression(files: FileList) {
@@ -149,33 +147,37 @@ export function AddProject() {
     return images;
   }
 
+  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     setLoading(true);
-    // const images = await uploadImages(values.images);
     const body = new FormData();
     body.append("title", values.title);
     body.append("tags", JSON.stringify(values.tags.map((tag) => tag.value)));
-    // body.append("images", JSON.stringify(images));
     console.log(body);
     const response = await fetch("/api/project/addProject", {
       method: "POST",
       body: body,
     });
-    console.log(response);
-    if (response.ok) {
-      toast.success("Proyecto agregado");
-    } else {
+    const id = await response.json().then((data) => data[0].id);
+    if (!response.ok) {
       toast.error("Error al agregar proyecto");
+      setLoading(false);
+      return;
     }
+    toast.success("Proyecto agregado");
+    await uploadImages(values.images, id);
+    projectsStore.set(await getProjects());
+    tagsStore.set(await getTags());
     setLoading(false);
+    setOpen(false);
   }
 
   return (
     <>
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button className="gap-1" variant={"secondary"}>
             <Plus className="size-4" /> Agregar
