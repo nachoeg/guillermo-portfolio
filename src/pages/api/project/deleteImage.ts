@@ -10,7 +10,7 @@ export const DELETE: APIRoute = async ({ request, redirect }) => {
     .from("images")
     .remove([id]);
   if (errorDeleteStorage) {
-    console.log(errorDeleteStorage);
+    console.error(errorDeleteStorage);
     return new Response(errorDeleteStorage.message, { status: 500 });
   }
   const { error: errorDeleteImage } = await supabase
@@ -18,7 +18,7 @@ export const DELETE: APIRoute = async ({ request, redirect }) => {
     .delete()
     .eq("id", id);
   if (errorDeleteImage) {
-    console.log(errorDeleteImage);
+    console.error(errorDeleteImage);
     return new Response(errorDeleteImage.message, { status: 500 });
   }
 

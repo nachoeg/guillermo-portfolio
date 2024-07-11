@@ -3,7 +3,6 @@ import { supabase } from "../../../lib/supabase";
 
 export const POST: APIRoute = async ({ request, redirect }) => {
   const formData = await request.formData();
-  console.log(formData);
   const title = formData.get("title")?.toString();
   const tags = formData.get("tags")?.toString();
   if (tags === undefined || tags === "[]")
@@ -18,7 +17,6 @@ export const POST: APIRoute = async ({ request, redirect }) => {
       },
     ])
     .select();
-  console.log(response);
   if (response.error)
     return new Response(response.error.message, { status: 500 });
   return new Response(JSON.stringify(response.data), { status: 200 });

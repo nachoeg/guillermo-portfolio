@@ -33,10 +33,10 @@ function DeleteProject({ id }: { id: number }) {
         projectsStore.set(await getProjects());
         tagsStore.set(await getTags());
       } else {
-        console.log(response);
+        console.error(response);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
     setLoading(false);
     setOpen(false);

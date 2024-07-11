@@ -6,7 +6,6 @@ import { projectsStore } from "../store.js";
 export function ProjectsGrid({ isAuth }: { isAuth: boolean }) {
   const selectedTag = useStore(tagStore);
   const projects = useStore(projectsStore);
-  console.log(projects);
   function filterProjects() {
     if (selectedTag === "Todo") {
       return projects;

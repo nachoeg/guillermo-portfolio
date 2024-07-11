@@ -15,7 +15,6 @@ function SignInForm() {
     event.preventDefault();
     const email: string = event.currentTarget.email.value;
     const password: string = event.currentTarget.password.value;
-    console.log(email, password);
     const formData = new FormData();
     formData.append("email", email);
     formData.append("password", password);

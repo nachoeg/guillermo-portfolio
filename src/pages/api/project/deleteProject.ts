@@ -11,7 +11,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     .select("id")
     .eq("project", id);
   if (imagesError) {
-    console.log(imagesError);
+    console.error(imagesError);
     return new Response(imagesError.message, { status: 500 });
   }
   if (images !== null) {
@@ -21,7 +21,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         .remove([image.id]);
 
       if (error) {
-        console.log(error);
+        console.error(error);
         return new Response(error.message, {
           status: 500,
         });
@@ -30,7 +30,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   }
   const { error } = await supabase.from("images").delete().eq("project", id);
   if (error) {
-    console.log(error);
+    console.error(error);
     new Response(error.message, { status: 500 });
   }
   const response = await supabase.from("projects").delete().eq("id", id);

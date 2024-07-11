@@ -14,7 +14,6 @@ export function Project({
   index: number;
   isAuth: boolean;
 }) {
-  console.log(data);
   const ref = useRef<{ handleKeyPress: (event: any) => void }>(null);
 
   const handleKeyPress = (event: any) => {

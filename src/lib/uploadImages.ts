@@ -38,14 +38,13 @@ async function uploadImages(files: FileList, id: number) {
         method: "POST",
         body: formData,
       });
-      console.log(response);
       if (response.ok) {
         toast.success("Imagen subida");
       } else {
         toast.error("Error al subir imagen");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 }
@@ -53,12 +52,10 @@ async function uploadImages(files: FileList, id: number) {
 async function uploadImagesWithCompression(files: FileList) {
   const images: string[] = [];
   for (const image of files) {
-    console.log(image.size);
     await new Promise<void>((resolve, reject) => {
       new Compressor(image, {
         quality: 0.6,
         success(result) {
-          console.log(result.size);
           const formData = new FormData();
           formData.append("file", result);
           fetch("/api/project/uploadProject", {
@@ -78,12 +75,12 @@ async function uploadImagesWithCompression(files: FileList) {
               }
             })
             .catch((error) => {
-              console.log(error);
+              console.error(error);
               reject();
             });
         },
         error(err) {
-          console.log(err.message);
+          console.error(err.message);
           reject();
         },
       });

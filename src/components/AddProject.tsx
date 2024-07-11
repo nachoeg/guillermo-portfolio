@@ -64,12 +64,10 @@ export function AddProject() {
   const [loading, setLoading] = useState(false);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
     setLoading(true);
     const body = new FormData();
     body.append("title", values.title);
     body.append("tags", JSON.stringify(values.tags.map((tag) => tag.value)));
-    console.log(body);
     const response = await fetch("/api/project/addProject", {
       method: "POST",
       body: body,

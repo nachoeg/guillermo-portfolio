@@ -5,12 +5,11 @@ const getProjects = async (): Promise<Project[]> => {
     .from("projects")
     .select("*");
   if (errorProjects) console.error("error", errorProjects);
-  console.log(projects);
+
   const { data: images, error: errorImages } = await supabase
     .from("images")
     .select("*");
   if (errorImages) console.error("error", errorImages);
-  console.log(images);
 
   const updatedProjects = projects
     ? projects.map((project) => {
@@ -30,7 +29,6 @@ const getProjects = async (): Promise<Project[]> => {
         return { ...project, images: projectImages };
       })
     : [];
-  console.log(updatedProjects);
   return updatedProjects;
 };
 
