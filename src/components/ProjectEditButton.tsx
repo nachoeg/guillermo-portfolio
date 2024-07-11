@@ -21,6 +21,7 @@ import { projectsStore, tagsStore } from "@/store";
 import { useStore } from "@nanostores/react";
 import getProjects from "@/data/projects";
 import getTags from "@/data/tags";
+import LoadingButton from "./LoadingButton";
 
 function ProjectEditButton({
   id,
@@ -119,17 +120,7 @@ function ProjectEditButton({
               )}
             />
             <Button disabled={loading} className="w-full" type="submit">
-              {loading ? (
-                <div className="flex gap-1 items-center">
-                  <Spinner
-                    size={"small"}
-                    className="text-neutral-50 dark:text-neutral-950"
-                  />
-                  Cargando...
-                </div>
-              ) : (
-                "Guardar cambios"
-              )}
+              {loading ? <LoadingButton /> : "Guardar cambios"}
             </Button>
           </form>
         </Form>
