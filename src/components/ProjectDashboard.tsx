@@ -7,11 +7,13 @@ import { Input } from "./ui/input";
 import ProjectEditButton from "./ProjectEditButton";
 
 function ProjectDashboard({
+  id,
   title,
   current,
   count,
   tags,
 }: {
+  id: number;
   title: string;
   current: number;
   count: number;
@@ -28,7 +30,7 @@ function ProjectDashboard({
   };
   return (
     <div className="absolute bottom-3 right-3 flex gap-2 [&_button]:shadow ">
-      <ProjectEditButton title={title} tags={tags}></ProjectEditButton>
+      <ProjectEditButton id={id} title={title} tags={tags}></ProjectEditButton>
 
       <Button variant={"carousel"} size={"icon"} onClick={handleDelete}>
         <Trash className="size-5" />

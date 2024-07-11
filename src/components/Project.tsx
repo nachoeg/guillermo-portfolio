@@ -50,6 +50,7 @@ export function Project({
       >
         <ProjectCarousel
           ref={ref}
+          id={data.id}
           images={data.images}
           title={data.title}
           tags={data.tags}

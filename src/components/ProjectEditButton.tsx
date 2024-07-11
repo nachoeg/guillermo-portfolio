@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Button } from "./ui/button";
 import { Edit } from "lucide-react";
-import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Spinner } from "./ui/spinner";
 import { set, z } from "zod";
@@ -17,11 +16,29 @@ import {
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
+import { projectsStore, tagsStore } from "@/store";
+import { useStore } from "@nanostores/react";
+import getProjects from "@/data/projects";
+import getTags from "@/data/tags";
 
-function ProjectEditButton({ title, tags }: { title: string; tags: string[] }) {
+function ProjectEditButton({
+  id,
+  title,
+  tags,
+}: {
+  id: number;
+  title: string;
+  tags: string[];
+}) {
   const [loading, setLoading] = useState(false);
 
-  const tagsOptions: Option[] = tags.map((tag) => ({
+  const defaultTags = tags.map((tag) => ({
+    label: tag,
+    value: tag,
+  }));
+
+  const tagsOptions: Option[] = useStore(tagsStore).map((tag) => ({
     label: tag,
     value: tag,
   }));
@@ -34,13 +51,27 @@ function ProjectEditButton({ title, tags }: { title: string; tags: string[] }) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: title,
-      tags: tagsOptions,
+      tags: defaultTags,
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
-    //llamar a la api para guardar los cambios
+    const body = new FormData();
+    body.append("title", values.title);
+    body.append("tags", JSON.stringify(values.tags.map((tag) => tag.value)));
+    body.append("id", id.toString());
+    const response = await fetch("/api/project/editProject", {
+      method: "PUT",
+      body: body,
+    });
+    if (response.ok) {
+      projectsStore.set(await getProjects());
+      tagsStore.set(await getTags());
+      toast.success("Proyecto actualizado");
+    } else {
+      toast.error("Error al actualizar el proyecto");
+    }
     setLoading(false);
   }
 

@@ -22,8 +22,14 @@ import ProjectDashboard from "./ProjectDashboard";
 
 export const ProjectCarousel = forwardRef<
   { handleKeyPress: (event: any) => void },
-  { images: Image[]; title: string; tags: string[]; isAuth: boolean }
->(({ images, title, tags, isAuth }, ref) => {
+  {
+    id: number;
+    images: Image[];
+    title: string;
+    tags: string[];
+    isAuth: boolean;
+  }
+>(({ id, images, title, tags, isAuth }, ref) => {
   {
     const [api, setApi] = useState<CarouselApi>();
     const [current, setCurrent] = useState(0);
@@ -167,6 +173,7 @@ export const ProjectCarousel = forwardRef<
 
         {isAuth && (
           <ProjectDashboard
+            id={id}
             title={title}
             current={current}
             count={count}
@@ -179,9 +186,9 @@ export const ProjectCarousel = forwardRef<
             <CarouselNext />
             {renderDots()}
             {renderCounter()}
-            {title && renderTitle()}
           </>
         )}
+        {title && renderTitle()}
       </Carousel>
     );
   }
