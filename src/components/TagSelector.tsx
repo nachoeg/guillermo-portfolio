@@ -1,10 +1,11 @@
-import TAGS from "@/data/tags.js";
 import { useStore } from "@nanostores/react";
 import { Badge } from "@/components/ui/badge.tsx";
-import { tagStore } from "../store.js";
+import { tagStore, tagsStore } from "../store.js";
 import { X } from "lucide-react";
 
 export function TagSelector() {
+  const tags = ["Todo", ...useStore(tagsStore)];
+
   const handleClick = (tag: React.MouseEvent<HTMLDivElement>) => {
     const target = tag.target as HTMLDivElement;
     if (target.innerText == tagStore.get()) {
@@ -12,7 +13,6 @@ export function TagSelector() {
     } else tagStore.set(target.innerText);
   };
 
-  const tags = ["Todo", ...TAGS];
   const selectedTag = useStore(tagStore);
 
   return (
