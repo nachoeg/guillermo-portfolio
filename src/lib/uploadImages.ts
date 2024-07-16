@@ -1,4 +1,5 @@
 import { toast } from "sonner";
+import Compressor from "compressorjs";
 
 const MAX_FILE_SIZE = 5000000;
 const ACCEPTED_IMAGE_TYPES = [
@@ -28,10 +29,31 @@ const validateImageType = (files: FileList) => {
   return true;
 };
 
-async function uploadImages(files: FileList, id: number) {
+async function uploadImages(
+  files: FileList,
+  id: number,
+  compress: boolean = true,
+  quality: number = 0.4
+) {
   for (const image of files) {
     const formData = new FormData();
-    formData.append("file", image);
+    if (compress) {
+      const compressedBlob = await new Promise((resolve, reject) => {
+        new Compressor(image, {
+          quality: quality,
+          success(result) {
+            resolve(result);
+          },
+          error(err) {
+            toast.error(err.message);
+            reject(err);
+          },
+        });
+      });
+      formData.append("file", compressedBlob as Blob);
+    } else {
+      formData.append("file", image);
+    }
     formData.append("projectId", id.toString());
     try {
       const response = await fetch("/api/project/uploadImage", {
@@ -49,51 +71,10 @@ async function uploadImages(files: FileList, id: number) {
   }
 }
 
-async function uploadImagesWithCompression(files: FileList) {
-  const images: string[] = [];
-  for (const image of files) {
-    await new Promise<void>((resolve, reject) => {
-      new Compressor(image, {
-        quality: 0.6,
-        success(result) {
-          const formData = new FormData();
-          formData.append("file", result);
-          fetch("/api/project/uploadProject", {
-            method: "POST",
-            body: formData,
-          })
-            .then((response) => {
-              if (response.ok) {
-                response.text().then((url) => {
-                  images.push(url);
-                  toast.success("Imagen subida");
-                  resolve();
-                });
-              } else {
-                toast.error("Error al subir imagen");
-                reject();
-              }
-            })
-            .catch((error) => {
-              console.error(error);
-              reject();
-            });
-        },
-        error(err) {
-          console.error(err.message);
-          reject();
-        },
-      });
-    });
-  }
-  return images;
-}
-
 export {
   validateImageSize,
   validateImageType,
   uploadImages,
-  uploadImagesWithCompression,
   MAX_FILE_SIZE,
   ACCEPTED_IMAGE_TYPES,
 };
