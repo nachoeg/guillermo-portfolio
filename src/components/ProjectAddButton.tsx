@@ -105,7 +105,10 @@ function ProjectAddButton({ id }: { id: number }) {
                           checked={field.value}
                           onCheckedChange={field.onChange}
                         />
-                        <label htmlFor="compression" className="text-sm">
+                        <label
+                          htmlFor="compression"
+                          className="text-sm cursor-pointer select-none"
+                        >
                           Comprimir imagen{" "}
                           <span className="text-neutral-500 dark:text-neutral-500">
                             (recomendado)
