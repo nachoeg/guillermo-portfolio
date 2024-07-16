@@ -33,7 +33,7 @@ async function uploadImages(
   files: FileList,
   id: number,
   compress: boolean = true,
-  quality: number = 0.4
+  quality: number = 0.6
 ) {
   for (const image of files) {
     const formData = new FormData();
