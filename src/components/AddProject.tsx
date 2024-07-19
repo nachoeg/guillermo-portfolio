@@ -15,11 +15,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import Compressor from "compressorjs";
 import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import MultipleSelector, {
   type Option,
@@ -37,6 +36,7 @@ import {
 } from "@/lib/uploadImages";
 import { Checkbox } from "./ui/checkbox";
 import { Slider } from "./ui/slider";
+import LoadingButton from "./LoadingButton";
 
 export function AddProject() {
   const tags: Option[] = useStore(tagsStore).map((tag) => ({
@@ -238,17 +238,7 @@ export function AddProject() {
                 </div>
               </div>
               <Button disabled={loading} type="submit">
-                {loading ? (
-                  <div className="flex gap-1 items-center">
-                    <Spinner
-                      size={"small"}
-                      className="text-neutral-50 dark:text-neutral-950"
-                    />
-                    Cargando...
-                  </div>
-                ) : (
-                  "Agregar"
-                )}
+                {loading ? <LoadingButton /> : "Agregar"}
               </Button>
             </form>
           </Form>
