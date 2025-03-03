@@ -3,10 +3,15 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import { ProjectsGrid } from "../components/ProjectsGrid";
 import Footer from "../components/Footer.astro";
+import Loading from "@/components/Loading";
 ---
 
 <Layout title="Guillermo Escudero">
   <Header />
-  <ProjectsGrid isAuth={false} client:only="react" />
+  <ProjectsGrid isAuth={false} client:only="react">
+    <main slot="fallback" class="flex justify-center">
+      <Loading />
+    </main>
+  </ProjectsGrid>
   <Footer />
 </Layout>

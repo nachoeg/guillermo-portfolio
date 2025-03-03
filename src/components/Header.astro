@@ -7,6 +7,8 @@ import WhatsApp from "@/icons/WhatsApp";
 import { ModeToggle } from "@/components/ModeToggle";
 import Mail from "@/icons/Mail";
 import Filler from "./Filler";
+import Loading from "./Loading";
+import { Badge } from "./ui/badge";
 ---
 
 <header
@@ -94,7 +96,15 @@ import Filler from "./Filler";
   </nav>
   <div class="flex flex-wrap gap-x-4 gap-y-2 justify-between">
     <div class="sm:place-content-end min-h-7 place-items-end pb-0.5">
-      <TagSelector client:only="react" />
+      <TagSelector client:only="react">
+        <div slot="fallback" class="flex gap-2">
+          <Badge className="h-5 w-16 animate-pulse" />
+          <Badge variant="secondary" className="h-5 w-16 animate-pulse" />
+          <Badge variant="secondary" className="h-5 w-16 animate-pulse" />
+          <Badge variant="secondary" className="h-5 w-16 animate-pulse" />
+          <Badge variant="secondary" className="h-5 w-16 animate-pulse" />
+        </div>
+      </TagSelector>
     </div>
     <slot />
   </div>
